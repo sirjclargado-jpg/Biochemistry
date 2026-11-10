@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Quiz Assessment</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .form-container { background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 700px; }
+        h2 { color: #333; text-align: center; margin-bottom: 5px; }
+        p.subtitle { text-align: center; color: #666; margin-bottom: 25px; }
+        .form-section { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #444; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
+        textarea { resize: vertical; height: 100px; }
+        button { background-color: #4CAF50; color: white; padding: 14px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; }
+        button:hover { background-color: #45a049; }
+        #loading { display: none; text-align: center; color: #666; margin-top: 10px; font-weight: bold; }
+        #success-message { display: none; color: green; text-align: center; margin-top: 15px; font-weight: bold; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Science Module Assessment</h2>
+    <p class="subtitle">Please answer the following questions clearly and concisely.</p>
+
+    <form id="scienceForm">
+        <!-- Student Information Section -->
+        <div class="form-section">
+            <div class="form-group">
+                <label for="Full Name">Full Name</label>
+                <input type="text" id="Full Name" name="Full Name" required placeholder="Last Name, First Name M.I.">
+            </div>
+
+            <div class="form-group">
+                <label for="Email">Email Address</label>
+                <input type="email" id="Email" name="Email" required placeholder="student@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="Grade & Section">Grade & Section</label>
+                <input type="text" id="Grade & Section" name="Grade & Section" required placeholder="e.g., Grade 9 - Einstein">
+            </div>
+        </div>
+
+        <!-- Quiz Questions Section -->
+        <div class="form-group">
+            <label for="Q1_What_is_life">1. What is life?</label>
+            <textarea id="Q1_What_is_life" name="Q1_What_is_life" required placeholder="Type your answer here..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="Q2_Characteristics">2. What are the 7 characteristics of life? Explain each.</label>
+            <textarea id="Q2_Characteristics" name="Q2_Characteristics" required placeholder="Type your answer here..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="Q3_First_Evidence">3. What and when is the first evidence of life?</label>
+            <textarea id="Q3_First_Evidence" name="Q3_First_Evidence" required placeholder="Type your answer here..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="Q4_Raw_Materials">4. What did life use as its raw materials?</label>
+            <textarea id="Q4_Raw_Materials" name="Q4_Raw_Materials" required placeholder="Type your answer here..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="Q5_Four_Elements">5. What are the four elements of life?</label>
+            <textarea id="Q5_Four_Elements" name="Q5_Four_Elements" required placeholder="Type your answer here..."></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn">Submit Assessment</button>
+        <div id="loading">Submitting your answers... Please wait.</div>
+        <div id="success-message">🎉 Success! Your responses have been recorded.</div>
+    </form>
+</div>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyFtf_0aWGa7ffjM1HzjyC63g235fDugrDqyKytG7YFUUKyNTA3LdmFotU610y1cLnOLA/exec'; // <-- Remember to paste your Web App URL here
+    const form = document.getElementById('scienceForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const loading = document.getElementById('loading');
+    const successMessage = document.getElementById('success-message');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        submitBtn.style.display = 'none';
+        loading.style.display = 'block';
+
+        let requestBody = new FormData(form);
+
+        fetch(scriptURL, { method: 'POST', body: requestBody })
+            .then(response => {
+                loading.style.display = 'none';
+                successMessage.style.display = 'block';
+                form.reset();
+            })
+            .catch(error => {
+                loading.style.display = 'none';
+                submitBtn.style.display = 'block';
+                alert('Error submitting form! Please try again.');
+                console.error('Error!', error.message);
+            });
+    });
+</script>
+
+</body>
+</html>
